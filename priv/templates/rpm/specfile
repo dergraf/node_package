@@ -29,7 +29,6 @@ Vendor: {{vendor_name}}
 Packager: {{vendor_contact_name}} <{{vendor_contact_email}}>
 BuildRoot: %{_tmppath}/%{name}-%{_revision}-%{release}-root
 Summary: {{package_shortdesc}}
-Obsoletes: {{package_name}}
 
 %description
 {{package_desc}}
