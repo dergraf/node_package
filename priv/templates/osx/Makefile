@@ -4,7 +4,7 @@ default: buildrel
 	mkdir -p packages
 	mkdir -p osxbuild
 	cd $(PKG_ID) && \
-		cp -R _build/default/rel/{{package_install_name}} \
+		cp -R _build/{{rebar_profile}}/rel/{{package_install_name}} \
 		   ../osxbuild/{{package_name}}-$(PKG_VERSION)
 	cd osxbuild && \
 		tar -czf ../packages/$(PKGNAME) \

@@ -3,7 +3,8 @@
 {variables, [
              {package_name, "package_name"},
              {package_install_name, "package_install_name"},
-             {package_install_user, "package_install_user"}
+             {package_install_user, "package_install_user"},
+             {rebar_profile, "default"}
              ]
 }.
 {template, "Makefile", "Makefile"}.

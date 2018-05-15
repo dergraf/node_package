@@ -35,8 +35,8 @@ install: build
 	dh_prep
 	dh_installdirs
 	## copy the start_clean.boot
-	if [ -f _build/default/rel/{{package_install_name}}/bin/start_clean.boot ]; then \
-		cp _build/default/rel/{{package_install_name}}/bin/start_clean.boot \
+	if [ -f _build/{{rebar_profile}}/rel/{{package_install_name}}/bin/start_clean.boot ]; then \
+		cp _build/{{rebar_profile}}/rel/{{package_install_name}}/bin/start_clean.boot \
 				debian/{{package_name}}/usr/lib/{{package_install_name}}; fi
 	dh_install
 	dh_installman

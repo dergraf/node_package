@@ -16,6 +16,7 @@
              {license_type, "license_type"},
              {license_full_text, ""},
              {bin_or_sbin, "bin"},
+             {rebar_profile, "default"},
 
              %% Platform Specific Settings
              {platform_bin_dir,  "/usr/{{bin_or_sbin}}"},

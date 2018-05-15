@@ -27,17 +27,17 @@ buildrel:
 	@# Ye Olde Bourne Shell on Solaris means we have to do it old school
 	echo "Using `which erl` to build"; \
 	OVERLAY_VARS="overlay_vars=../solaris/vars.config" $(MAKE) rel
-	chmod -R go+rX _build/default/rel/{{package_install_name}}
-	chmod 0755 _build/default/rel/{{package_install_name}}/etc
-	chmod -R a+rX _build/default/rel/{{package_install_name}}/etc
-	chmod 0755 _build/default/rel/{{package_install_name}}/lib/env.sh
-	chmod 0755 _build/default/rel/{{package_install_name}}/lib/app_epath.sh
-	chmod 0755 _build/default/rel/{{package_install_name}}/erts-*/bin/nodetool
-	chmod -R go+rX _build/default/rel/{{package_install_name}}/lib/
-	chmod 0755 _build/default/rel/{{package_install_name}}/bin/* \
-		_build/default/rel/{{package_install_name}}/erts-*/bin/*
+	chmod -R go+rX _build/{{rebar_profile}}/rel/{{package_install_name}}
+	chmod 0755 _build/{{rebar_profile}}/rel/{{package_install_name}}/etc
+	chmod -R a+rX _build/{{rebar_profile}}/rel/{{package_install_name}}/etc
+	chmod 0755 _build/{{rebar_profile}}/rel/{{package_install_name}}/lib/env.sh
+	chmod 0755 _build/{{rebar_profile}}/rel/{{package_install_name}}/lib/app_epath.sh
+	chmod 0755 _build/{{rebar_profile}}/rel/{{package_install_name}}/erts-*/bin/nodetool
+	chmod -R go+rX _build/{{rebar_profile}}/rel/{{package_install_name}}/lib/
+	chmod 0755 _build/{{rebar_profile}}/rel/{{package_install_name}}/bin/* \
+		_build/{{rebar_profile}}/rel/{{package_install_name}}/erts-*/bin/*
 	if [ "{{bin_or_sbin}}" != "bin" ]; then \
-	   mv _build/default/rel/{{package_install_name}}/bin _build/default/rel/{{package_install_name}}/{{bin_or_sbin}}; fi
+	   mv _build/{{rebar_profile}}/rel/{{package_install_name}}/bin _build/{{rebar_profile}}/rel/{{package_install_name}}/{{bin_or_sbin}}; fi
 
 depend:
 	cp $(PKGERDIR)/depend .
@@ -56,7 +56,7 @@ prototype:
 	echo "i i.preserve" >> prototype
 	echo "i r.preserve" >> prototype
 	echo '' >> prototype
-	pkgproto _build/default/rel/{{package_install_name}}={{package_install_name}} >> prototype
+	pkgproto _build/{{rebar_profile}}/rel/{{package_install_name}}={{package_install_name}} >> prototype
 	sed -e "s/ $(LOGNAME) .*$$/ root bin/" \
 		-e "s/\([f|d]\) none {{package_install_name}}\/log\(.*\) \(.*\) root bin/\1 none {{package_install_name}}\/log\2 \3 {{package_install_user}} {{package_install_group}}/" \
 		-e "s/\([f|d]\) none {{package_install_name}}\/data\(.*\) \(.*\) root bin/\1 none {{package_install_name}}\/data\2 \3 {{package_install_user}} {{package_install_group}}/" \

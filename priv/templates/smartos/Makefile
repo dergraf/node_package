@@ -69,7 +69,7 @@ PDATA_ROOT_DIR   = $(shell echo "{{platform_data_dir}}" | cut -d'/' -f 2)
 
 # Recursive assignment of ERTS version
 # We will know this after building the rel
-ERTS_PATH        = $(shell ls $(BUILDDIR)/_build/default/rel/{{package_install_name}} | egrep -o "erts-.*")
+ERTS_PATH        = $(shell ls $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}} | egrep -o "erts-.*")
 
 TARNAME := $(PACKAGE_NAME_CLEAN)-$(PKG_VERSION)-$(OSNAME)-$(ARCH).tar
 PKGNAME := $(PACKAGE_NAME_CLEAN)-$(PKG_VERSION)-$(OSNAME)-$(ARCH).tgz
@@ -210,23 +210,23 @@ templates: $(BUILD_STAGE_DIR)
 $(BUILD_STAGE_DIR): buildrel patch_runner
 	@echo "Copying rel directory to staging directory"
 	mkdir -p $@
-	cp -R $(BUILDDIR)/_build/default/rel/{{package_install_name}} $(BUILD_STAGE_DIR)
+	cp -R $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}} $(BUILD_STAGE_DIR)
 	mkdir -p $(PBIN_DIR)
-	cp -R $(BUILDDIR)/_build/default/rel/{{package_install_name}}/bin/* $(PBIN_DIR)
+	cp -R $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/bin/* $(PBIN_DIR)
 	mkdir -p $(PETC_DIR)
-	cp -R $(BUILDDIR)/_build/default rel/{{package_install_name}}/etc/* $(PETC_DIR)
+	cp -R $(BUILDDIR)/_build/{{rebar_profile}} rel/{{package_install_name}}/etc/* $(PETC_DIR)
 	mkdir -p $(PLIB_DIR)
-	cp -R $(BUILDDIR)/_build/default/rel/{{package_install_name}}/lib $(PLIB_DIR)
-	cp -R $(BUILDDIR)/_build/default/rel/{{package_install_name}}/erts-* $(PLIB_DIR)
-	cp -R $(BUILDDIR)/_build/default/rel/{{package_install_name}}/releases $(PLIB_DIR)
+	cp -R $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/lib $(PLIB_DIR)
+	cp -R $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/erts-* $(PLIB_DIR)
+	cp -R $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/releases $(PLIB_DIR)
 	@echo "Copying man pages to staging directory"
 	mkdir -p $(PMAN_DIR)
 	if [ -d $(BUILDDIR)/doc/man/man1 ]; then \
 	    cp -R $(BUILDDIR)/doc/man/man1 $(PMAN_DIR); fi
 	@echo "Copying data and log directories to staging directory"
-	if [ -d $(BUILDDIR)/_build/default/rel/{{package_install_name}}/data ]; then \
+	if [ -d $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/data ]; then \
 	   mkdir -p $(PDATA_DIR) && \
-	   cp -R $(BUILDDIR)/_build/default/rel/{{package_install_name}}/data/* $(PDATA_DIR); fi
+	   cp -R $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/data/* $(PDATA_DIR); fi
 
 
 # If we can read the PKGSRC_VERSION we should fail
@@ -239,10 +239,10 @@ smartos_check:
 
 # Patch the runner script with SmartOS modifications
 patch_runner: buildrel
-	cp $(PKGERDIR)/runner.patch $(BUILDDIR)/_build/default/rel/{{package_install_name}}/bin/
-	cd $(BUILDDIR)/_build/default/rel/{{package_install_name}}/bin && \
+	cp $(PKGERDIR)/runner.patch $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/bin/
+	cd $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/bin && \
 	   patch -p0 {{package_install_name}} runner.patch
-	rm $(BUILDDIR)/_build/default/rel/{{package_install_name}}/bin/runner.patch
+	rm $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/bin/runner.patch
 
 
 # Build the release we need to package
@@ -250,7 +250,7 @@ patch_runner: buildrel
 #  * copy the vars.config over for build config
 buildrel: $(BUILDDIR) smartos_check
 	OVERLAY_VARS="overlay_vars=../smartos/vars.config" $(MAKE) rel
-	chmod 0755 $(BUILDDIR)/_build/default/rel/{{package_install_name}}/bin/* $(BUILDDIR)/_build/default/rel/{{package_install_name}}/erts-*/bin/*
+	chmod 0755 $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/bin/* $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}}/erts-*/bin/*
 
 $(BUILDDIR):
 	mkdir -p $@

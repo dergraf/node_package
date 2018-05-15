@@ -1,12 +1,12 @@
-_build/default/rel/{{package_install_name}}/lib usr/lib/{{package_install_name}}
-_build/default/rel/{{package_install_name}}/erts* usr/lib/{{package_install_name}}
-_build/default/rel/{{package_install_name}}/releases usr/lib/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/lib usr/lib/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/erts* usr/lib/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/releases usr/lib/{{package_install_name}}
 
 {{#package_commands}}
-_build/default/rel/{{package_install_name}}/bin/{{name}} usr/{{bin_or_sbin}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/bin/{{name}} usr/{{bin_or_sbin}}
 {{/package_commands}}
 
-_build/default/rel/{{package_install_name}}/etc/* etc/{{package_install_name}}
-_build/default/rel/{{package_install_name}}/data/* var/lib/{{package_install_name}}
-_build/default/rel/{{package_install_name}}/data/* var/lib/{{package_install_name}}
-_build/default/rel/{{package_install_name}}/share/* usr/share/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/etc/* etc/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/data/* var/lib/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/data/* var/lib/{{package_install_name}}
+_build/{{rebar_profile}}/rel/{{package_install_name}}/share/* usr/share/{{package_install_name}}

@@ -125,8 +125,8 @@ APP_VSN=${START_ERL#* }
 ERTS_PATH=$RUNNER_BASE_DIR/erts-$ERTS_VSN/bin
 
 # Setup command to control the node
-NODETOOL="$ERTS_PATH/escript $ERTS_PATH/nodetool $NET_TICKTIME_ARG $NAME_ARG $COOKIE_ARG"
-NODETOOL_LITE="$ERTS_PATH/escript $ERTS_PATH/nodetool"
+NODETOOL="$ERTS_PATH/escript $RUNNER_SCRIPT_DIR/nodetool $NET_TICKTIME_ARG $NAME_ARG $COOKIE_ARG"
+NODETOOL_LITE="$ERTS_PATH/escript $RUNNER_SCRIPT_DIR/nodetool"
 
 
 ## Are we using cuttlefish (http://github.com/basho/cuttlefish)
@@ -136,7 +136,7 @@ CUTTLEFISH="{{cuttlefish}}"
 if [ -z "$CUTTLEFISH" ]; then
     CUTTLEFISH_COMMAND_PREFIX=""
 else
-    CUTTLEFISH_COMMAND_PREFIX="$ERTS_PATH/escript $ERTS_PATH/cuttlefish -e $RUNNER_ETC_DIR -s $CUTTLEFISH_SCHEMA_DIR -d {{platform_data_dir}}/generated.configs -c $RUNNER_ETC_DIR/{{cuttlefish_conf}}"
+    CUTTLEFISH_COMMAND_PREFIX="$ERTS_PATH/escript $RUNNER_SCRIPT_DIR/cuttlefish -e $RUNNER_ETC_DIR -s $CUTTLEFISH_SCHEMA_DIR -d {{platform_data_dir}}/generated.configs -c $RUNNER_ETC_DIR/{{cuttlefish_conf}}"
 fi
 
 # Ping node without stealing stdin

@@ -21,7 +21,7 @@ PKGNAME = {{package_name}}-$(PKG_VERSION)-$(OSNAME)-$(ARCH).tbz
 
 # Recursive assignment of ERTS version
 # We will know this after building the rel
-ERTS_PATH = $(shell ls $(BUILDDIR)/_build/default/rel/{{package_install_name}} | egrep -o "erts-.*")
+ERTS_PATH = $(shell ls $(BUILDDIR)/_build/{{rebar_profile}}/rel/{{package_install_name}} | egrep -o "erts-.*")
 
 build: packing_list_files
 	@echo "Building package $(PKGNAME)"
@@ -78,15 +78,15 @@ $(BUILD_STAGE_DIR): buildrel
 	@echo "Copying rel directory to staging directory"
 	mkdir -p $@
 	mkdir -p $(PBIN_DIR)
-	cp -R _build/default/rel/{{package_install_name}}/bin/* $(PBIN_DIR)
+	cp -R _build/{{rebar_profile}}/rel/{{package_install_name}}/bin/* $(PBIN_DIR)
 	mkdir -p $(PETC_DIR)
-	cp -R _build/default/rel/{{package_install_name}}/etc/* $(PETC_DIR)
+	cp -R _build/{{rebar_profile}}/rel/{{package_install_name}}/etc/* $(PETC_DIR)
 	mkdir -p $(PLIB_DIR)
-	cp -R _build/default/rel/{{package_install_name}}/lib $(PLIB_DIR)
-	cp -R _build/default/rel/{{package_install_name}}/erts-* $(PLIB_DIR)
-	cp -R _build/default/rel/{{package_install_name}}/releases $(PLIB_DIR)
+	cp -R _build/{{rebar_profile}}/rel/{{package_install_name}}/lib $(PLIB_DIR)
+	cp -R _build/{{rebar_profile}}/rel/{{package_install_name}}/erts-* $(PLIB_DIR)
+	cp -R _build/{{rebar_profile}}/rel/{{package_install_name}}/releases $(PLIB_DIR)
 	mkdir -p $(PDATA_DIR)
-	cp -R _build/default/rel/{{package_install_name}}/data/* $(PDATA_DIR)
+	cp -R _build/{{rebar_profile}}/rel/{{package_install_name}}/data/* $(PDATA_DIR)
 	mkdir -p ${BUILD_STAGE_DIR}/usr/local/etc/rc.d
 
 
@@ -95,7 +95,7 @@ $(BUILD_STAGE_DIR): buildrel
 #  * copy the vars.config over for build config
 buildrel:
 	OVERLAY_VARS="overlay_vars=../fbsdng/vars.config" $(MAKE) rel
-	chmod 0755 _build/default/rel/{{package_install_name}}/bin/* _build/default/rel/{{package_install_name}}/erts-*/bin/*
+	chmod 0755 _build/{{rebar_profile}}/rel/{{package_install_name}}/bin/* _build/{{rebar_profile}}/rel/{{package_install_name}}/erts-*/bin/*
 
 $(BUILDDIR):
 	mkdir -p $@
